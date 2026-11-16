@@ -2,7 +2,8 @@
 using namespace std;
 
 class HeapSort {
-private:
+
+    public:
     void heapify(vector<int>& arr, int n, int i) {
         int largest = i;
         int left = 2 * i + 1;
@@ -14,7 +15,6 @@ private:
             heapify(arr, n, largest);
         }
     }
-public:
     void sort(vector<int>& arr) {
         int n = arr.size();
         for (int i = n / 2 - 1; i >= 0; i--) heapify(arr, n, i);
