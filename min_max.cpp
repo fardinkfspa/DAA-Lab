@@ -1,23 +1,40 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
-class MinMax {
-public:
-    pair<int, int> find(vector<int>& arr) {
-        if (arr.empty()) return {INT_MAX, INT_MIN};
-        int mn = arr[0], mx = arr[0];
-        for (int x : arr) {
-            mn = min(mn, x);
-            mx = max(mx, x);
-        }
-        return {mn, mx};
+void findMinMax(int arr[], int left, int right, int &minimum, int &maximum) {
+    if (left == right) {
+        minimum = maximum = arr[left];
+        return;
     }
-};
+
+    int middle = (left + right) / 2;
+    int leftMin, leftMax, rightMin, rightMax;
+
+    findMinMax(arr, left, middle, leftMin, leftMax);
+    findMinMax(arr, middle + 1, right, rightMin, rightMax);
+
+    minimum = (leftMin < rightMin) ? leftMin : rightMin;
+    maximum = (leftMax > rightMax) ? leftMax : rightMax;
+}
 
 int main() {
-    vector<int> arr = {64, 34, 25, 12, 22, 11, 90};
-    MinMax mm;
-    auto [mn, mx] = mm.find(arr);
-    cout << "Min = " << mn << ", Max = " << mx << "\n";
-    return 0;
+    int n;
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    int *arr = new int[n];
+
+    cout << "Enter the numbers: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    int minimum, maximum;
+    findMinMax(arr, 0, n - 1, minimum, maximum);
+
+    cout << "Minimum = " << minimum << "\n";
+    cout << "Maximum = " << maximum << "\n";
+
+    delete[] arr;
 }
